@@ -1,12 +1,7 @@
 #include "Arduino_LED_Matrix.h"   // Include the LED_Matrix library
 #include "frames.h"               // Include a header file containing some custom icons
 #include "WiFiS3.h"
-//#include "WiFiSSLClient.h"
-//#include <WiFiNINA.h>
 #include "secrets.h" 
-//#include <WiFiClientSecure.h>
-
-
 
 ArduinoLEDMatrix matrix;          // Create an instance of the ArduinoLEDMatrix class
 char ssid[] = SECRET_SSID;        // your network SSID (name)
@@ -14,13 +9,9 @@ char pass[] = SECRET_PASS;        // your network password (use for WPA, or use 
 int keyIndex = 0;                 // your network key index number (needed only for WEP)
 
 int status = WL_IDLE_STATUS;
-//IPAddress server(192,168,111,199);
-//IPAddress server(94,32,111,10);
 char server[] = "www.nesea.eu";    // name address (using DNS)
 
 WiFiSSLClient client;
-//WiFiClient client;
-//WiFiClientSecure client;
 
 char simbolo = 'c';
 void setup() {
@@ -28,7 +19,6 @@ void setup() {
   matrix.begin();
    while (!Serial) { ; }
 
-   // check for the WiFi module:
   if (WiFi.status() == WL_NO_MODULE) {
     Serial.println("Communication with WiFi module failed!");
     // don't continue
@@ -43,14 +33,10 @@ void setup() {
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
-
     status = WiFi.begin(ssid, pass);
-
     delay(10000);
   }
-  
   printWifiStatus();
-
 }
 
 void loop() {
@@ -63,7 +49,6 @@ void loop() {
   matrix.clear();
   delay(3000);
   
-  //client.setCACert(nesea_ca);
   if (client.connect(server,443)) {
     Serial.println("connected to server");
     client.println("GET /iot001/simbolo.txt HTTP/1.1");
@@ -76,33 +61,8 @@ void loop() {
 
   char c = 'n';
   Serial.println("attendo risposta");
-  while (client.connected()) {
-    while (client.available()) {
-      // read an incoming byte from the server and print it to serial monitor:
-      Serial.print((c = client.read()));
-    }
-  }
+  while (client.connected()) { while (client.available()) { Serial.print((c = client.read()));  } }
   if (!client.connected()) { Serial.println("disconnecting from server."); client.stop(); }
-  
-  /*
-  unsigned long t1 = millis();
-    while (client.available() == 0) {
-      if ((millis() - t1) > 5000) {
-         Serial.println("timeout");
-         client.stop();
-         while(true);
-      }
-    }
-    
-    //ricezione dati 
-    while (client.available()) {
-      String line = client.readStringUntil('\r');
-      Serial.print(line);
-    }
-    
-    client.stop();
-*/
-
 }
 
 void printWifiStatus() {
