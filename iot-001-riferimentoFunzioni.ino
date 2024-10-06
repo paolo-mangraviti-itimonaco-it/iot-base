@@ -7,11 +7,14 @@ String statoA(int p);
 String statoB(int p);
 
 // Si costruisce un array di puntantori: l'operatore prefisso * permette di indicare in modo esplicito il tipo puntatore
-// Dalla tradizione C la scrittura, la presenza di () postfisso in (*f)() indica in modo esplicito un puntatore a funzione 
-// ogni elemento è un puntatore a funzione, il cui indirizzo è indicato in modo esplicito con l'operatore & (riferimento) prefisso
-// le funzioni riferite hanno un solo parametro formale. 
-// L'array è inizializzato con gli indirizzi delle funzioni pre-dichiarate alle righe 5 e 6 alle quali è già assegnato un indirizzo
+// Dalla tradizione C la scrittura, la presenza scrittura (*f)() indica in modo esplicito un puntatore a funzione. 
+// (*f)(int) puntatore a funzione che ha parametro formale di tipo intero
 String (*stati[2])(int) = {&statoA, &statoB};
+// ogni elemento è un puntatore a funzione, il cui indirizzo è indicato in modo esplicito con l'operatore & (riferimento) prefisso
+// le funzioni riferite hanno un solo parametro formale indicato nella scrittura (int). 
+// L'array è inizializzato con gli indirizzi delle funzioni pre-dichiarate alle righe 6 e 7 e che quindi si trovano già assegnato un indirizzo fisico 
+// stati[0](20) === statoA(20)
+// stati[1](33) === statoB(33)
 
 void setup() {
   Serial.begin(9600);
@@ -26,12 +29,14 @@ void loop() {
   Serial.print(iterazione); Serial.print(" -> ");
 }
 
+// Implementazione della funzione statoA(p)
 String statoA(int p) {
   digitalWrite(LED_BUILTIN, HIGH);
   delay(p); 
   return "ON risolto"; 
 }  
 
+// Implementazione della funzione statoB(p)
 String statoB(int p) {
   digitalWrite(LED_BUILTIN, LOW);
   delay(p);  
