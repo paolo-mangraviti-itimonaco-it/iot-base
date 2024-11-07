@@ -4,6 +4,9 @@
 #include "WiFiS3.h"
 #include <ArduinoHttpClient.h>
 
+#define SECRET_SSID "------"
+#define SECRET_PASS "------"
+
 ArduinoLEDMatrix matrix;          // Create an instance of the ArduinoLEDMatrix class
 char ssid[] = SECRET_SSID;        // your network SSID (name)
 char pass[] = SECRET_PASS;        // your network password (use for WPA, or use as key for WEP)
@@ -12,7 +15,7 @@ int keyIndex = 0;                 // your network key index number (needed only 
 int status = WL_IDLE_STATUS;
 //IPAddress server(192,168,111,199);
 //IPAddress server(94,32,111,10);
-char server[] = "www.nesea.eu";    // name address (using DNS)
+char server[] = "www.-----.-----";    // name address (using DNS)
 
 WiFiSSLClient client;
 //WiFiClient client;
