@@ -1,0 +1,6 @@
+#define SECRET_SSID   "wifi ssid"
+#define SECRET_PASS   "wifi password"
+#define USERID        "id utente telegram destinatario"
+#define TOKEN         "TOKEN del bot telegram"  
+#define APIBASE       "https://api.telegram.org/bot" 
+#define APISEND       APIBASE TOKEN "/sendMessage"
